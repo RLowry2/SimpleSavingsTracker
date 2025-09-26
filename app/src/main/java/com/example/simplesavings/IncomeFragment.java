@@ -41,6 +41,21 @@ public class IncomeFragment extends Fragment {
             }
         });
 
+        listView.setOnItemLongClickListener((parent, view1, position, id) -> {
+            Entry entry = adapter.getItem(position);
+            new android.app.AlertDialog.Builder(getContext())
+                    .setTitle("Delete Transaction")
+                    .setMessage("Delete this transaction?")
+                    .setPositiveButton("Confirm", (dialog, which) -> {
+                        dbHelper.deleteEntry(entry.id);
+                        adapter.updateEntries(dbHelper.getIncomeEntries());
+                        ((MainActivity)getActivity()).updateBalance();
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            return true;
+        });
+
         return view;
     }
 }

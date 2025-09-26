@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" android:padding="16dp">
+
     <TextView
         android:id="@+id/balanceView"
         android:layout_width="wrap_content"
@@ -9,7 +10,15 @@
         android:text="Net Balance: $0.00"
         android:textSize="20sp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="12dp"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

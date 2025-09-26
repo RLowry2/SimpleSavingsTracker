@@ -46,7 +46,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("entries", null, "type=?", new String[]{type}, null, null, "id DESC");
         while (cursor.moveToNext()) {
-            entries.add(new Entry(cursor.getDouble(1), cursor.getString(2), cursor.getString(3)));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("amount"));
+            String note = cursor.getString(cursor.getColumnIndexOrThrow("note"));
+            String entryType = cursor.getString(cursor.getColumnIndexOrThrow("type"));
+            entries.add(new Entry(id, amount, note, entryType));
         }
         cursor.close();
         return entries;
@@ -66,5 +70,10 @@ public class DBHelper extends SQLiteOpenHelper {
         double total = cursor.moveToFirst() ? cursor.getDouble(0) : 0.0;
         cursor.close();
         return total;
+    }
+
+    public void deleteEntry(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("entries", "id=?", new String[]{String.valueOf(id)});
     }
 }
